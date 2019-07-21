@@ -14,7 +14,6 @@ import {withFirebase} from "../Firebase";
 import Loading from "../Loading";
 import Banner from "../Banner";
 
-
 const CODES_PER_PAGE = 20;
 
 const styles = theme => ({
@@ -27,8 +26,8 @@ class CodeListPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.category_id = props.match.path.slice(1);
-        props.setCategory(this.category_id);
+        this.category = props.match.path.slice(1);
+        props.setCategory(this.category);
 
         this.state = {
             codes: [],
@@ -42,7 +41,7 @@ class CodeListPage extends React.Component {
     componentDidMount() {
         this._mounted = true;
 
-        let categoryName = CATEGORIES[this.category_id];
+        let categoryName = CATEGORIES[this.category];
         if (categoryName === undefined) {
             categoryName = ALL_CATEGORIES;
         }
@@ -67,12 +66,9 @@ class CodeListPage extends React.Component {
     loadCodes = () => {
         this.setState({loading: true, loadMore: false});
 
-        // TODO: quota
-        return this.fakeLoadCodes();
-
-        let codesRef = this.props.firebase.codes();
-        if (this.category_id !== '') {
-            codesRef = codesRef.where('category_id', '==', this.category_id);
+        let codesRef = this.props.firebase.codes().where('active', '==', true);
+        if (this.category !== '') {
+            codesRef = codesRef.where('category', '==', this.category);
         }
         codesRef = codesRef.orderBy('created', 'desc');
 
@@ -110,7 +106,7 @@ class CodeListPage extends React.Component {
 
         return (
             <React.Fragment>
-                { this.category_id === '' && <Banner /> }
+                { this.category === '' && <Banner setOpenDialog={this.props.setOpenDialog} /> }
 
                 {
                     this.state.codes.map(

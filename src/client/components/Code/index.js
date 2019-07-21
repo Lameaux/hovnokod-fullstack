@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 export default ({code}) => {
     const classes = useStyles();
 
-    const codeTitle = CATEGORIES[code.category_id] + ' #' + code.id;
+    const codeTitle = CATEGORIES[code.category] + ' #' + code.id;
 
     const formatter = buildFormatter(czechStrings);
 
@@ -38,19 +38,18 @@ export default ({code}) => {
         title: codeTitle,
     };
 
-
     return (
         <Paper className={classes.root}>
             <Typography component="h2" variant="h5">
                 {codeTitle}
             </Typography>
             <Typography variant="caption" color="textSecondary">
-                <TimeAgo date={code.created} formatter={formatter} />
+                <TimeAgo date={code.created.toDate()} formatter={formatter} />
             </Typography>
             <Typography variant="subtitle1" paragraph>
                 {code.description}
             </Typography>
-            <CodeBlock language={code.category_id} value={code.code} />
+            <CodeBlock language={code.category} value={code.code} />
 
             <Button variant="text" color="primary" component={RouterLink} to={'/' + code.id}>
                 <CommentCount

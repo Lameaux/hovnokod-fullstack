@@ -33,7 +33,8 @@ class CodePage extends React.Component {
     loadCode = () => {
         const code_id = this.props.match.url.slice(1);
 
-        this.updateCode(generateCode(code_id));
+        const codesRef = this.props.firebase.codes().doc(code_id);
+        codesRef.get().then(this.updateCode);
     };
 
     updateCode = (code) => {
@@ -46,7 +47,7 @@ class CodePage extends React.Component {
 
         const codeData = code.data();
 
-        this.props.setCategory(codeData.category_id);
+        this.props.setCategory(codeData.category);
 
         this.setState({
             code: codeData,
@@ -58,7 +59,7 @@ class CodePage extends React.Component {
 
     codeTitle = (code) => {
         if (code === null) return null;
-        return `${CATEGORIES[code.category_id]} #${code.id}`;
+        return `${CATEGORIES[code.category]} #${code.id}`;
     };
 
     componentDidMount() {
@@ -95,12 +96,12 @@ class CodePage extends React.Component {
                     {codeTitle}
                 </Typography>
                 <Typography variant="caption" color="textSecondary">
-                    <TimeAgo date={code.created} formatter={formatter} />
+                    <TimeAgo date={code.created.toDate()} formatter={formatter} />
                 </Typography>
                 <Typography variant="subtitle1" paragraph>
                     {code.description}
                 </Typography>
-                <CodeBlock language={code.category_id} value={code.code} />
+                <CodeBlock language={code.category} value={code.code} />
 
                 <DiscussionEmbed shortname={DISQUS_SHORTNAME} config={disqusConfig} />
             </Paper>

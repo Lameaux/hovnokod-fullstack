@@ -18,7 +18,7 @@ class Firebase {
         this.firestore = app.firestore();
     }
 
-    codes = () => this.firestore.collection('codes');
+    codes = () => this.firestore.collection('shitcodes');
 }
 
 export default Firebase;

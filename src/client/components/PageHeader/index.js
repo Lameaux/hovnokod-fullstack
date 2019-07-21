@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
     list: {
         width: 250,
     },
+    listItem: {
+        cursor: "pointer",
+    },
     button: {
         margin: theme.spacing(1),
     },
@@ -44,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 
 const logo = require('../../images/hovno.png');
 
-export default () => {
+export default ({setOpenDialog}) => {
     const classes = useStyles();
 
     const [state, setState] = React.useState({
@@ -89,7 +92,7 @@ export default () => {
                         </Typography>
 
                         <Hidden xsDown>
-                            <Button
+                            <Button onClick={() => setOpenDialog(true)}
                                 color="inherit"
                                 className={classes.button}
                             >
@@ -102,20 +105,20 @@ export default () => {
             </div>
             <Drawer anchor="left" open={state.menuDrawer} onClose={toggleMenuDrawer(false)}>
                 <div
-                    className={classes.list}
+                    className={classes.listItem}
                     role="presentation"
                     onClick={toggleMenuDrawer(false)}
                     onKeyDown={toggleMenuDrawer(false)}
                 >
                     <List>
-                        <ListItem>
+                        <ListItem className={classes.list}>
                             <ListItemIcon><CloseIcon /></ListItemIcon>
                             <ListItemText primary="Zavřít" />
                         </ListItem>
                     </List>
                     <Divider />
                     <List>
-                        <ListItem>
+                        <ListItem className={classes.listItem} onClick={() => setOpenDialog(true)}>
                             <ListItemIcon><CodeIcon /></ListItemIcon>
                             <ListItemText primary="Vložit zdroják" />
                         </ListItem>

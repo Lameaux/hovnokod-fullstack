@@ -7,12 +7,12 @@ export const generateCodes = (count) => {
 
     for (let i = 0; i < count; i++) {
 
-        let category_id = categories[Math.floor(Math.random()*categories.length)];
+        let category = categories[Math.floor(Math.random()*categories.length)];
 
         list.push(
             {
                 id: Math.floor(Math.random() * 1000),
-                category_id: category_id,
+                category: category,
                 description: 'Some very ugly code',
                 code: `
                     import AppBar from '@material-ui/core/AppBar';
@@ -32,7 +32,7 @@ export const generateCodes = (count) => {
 const generateCodeResponse = (id) => (
     {
         id: id,
-        category_id: 'java',
+        category: 'java',
         description: 'Some very ugly code',
         code: `
                     import AppBar from '@material-ui/core/AppBar';

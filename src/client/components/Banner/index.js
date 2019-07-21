@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default ({code}) => {
+export default ({setOpenDialog}) => {
     const classes = useStyles();
 
     return (
@@ -26,7 +26,7 @@ export default ({code}) => {
             <Typography variant="subtitle1" paragraph>
                 Narazili jste na zprasený kód? Nahrajte ho sem.
             </Typography>
-            <Button variant="text" color="secondary">
+            <Button variant="text" color="secondary" onClick={() => setOpenDialog(true)}>
                 <CodeIcon className={classes.leftIcon} />
                 Vložit zdroják
             </Button>

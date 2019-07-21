@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import PageHeader from '../PageHeader';
 import CategoryBar from '../CategoryBar';
 import PageFooter from '../PageFooter';
+import AddCodeDialog from '../AddCodeDialog';
 
 import CodeListPage from '../CodeListPage';
 import CodePage from '../CodePage';
@@ -17,15 +18,16 @@ import ScrollToTop from "../ScrollToTop"
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-import CATEGORIES, { ALL_CATEGORIES } from '../../constants/categories';
+import CATEGORIES from '../../constants/categories';
 
 const theme = createMuiTheme();
 
 export default () => {
     const [category, setCategory] = useState('');
+    const [openDialog, setOpenDialog] = useState(false);
 
     const categoryListPage = props => {
-        return <CodeListPage setCategory={setCategory} {...props} />
+        return <CodeListPage setCategory={setCategory} setOpenDialog={setOpenDialog} {...props} />
     };
 
     const codePage = props => {
@@ -37,7 +39,7 @@ export default () => {
             <Router history={history}>
                 <ScrollToTop>
                     <CssBaseline />
-                    <PageHeader />
+                    <PageHeader setOpenDialog={setOpenDialog} />
                     <CategoryBar category={category} />
                     <div style={{margin: "20px 5px"}}>
                         <Switch>
@@ -59,6 +61,7 @@ export default () => {
                         </Switch>
                     </div>
                     <PageFooter />
+                    <AddCodeDialog open={openDialog} setOpen={setOpenDialog} />
                 </ScrollToTop>
             </Router>
         </ThemeProvider>
