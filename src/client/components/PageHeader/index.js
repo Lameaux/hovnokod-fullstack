@@ -11,11 +11,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import AccountIcon from '@material-ui/icons/AccountCircle';
-import CommentIcon from '@material-ui/icons/Comment';
+import CodeIcon from '@material-ui/icons/Code';
 import CloseIcon from '@material-ui/icons/Close';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
+import history from '../History';
+import classNames from 'classnames';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,6 +37,9 @@ const useStyles = makeStyles(theme => ({
     leftIcon: {
         marginRight: theme.spacing(1),
     },
+    linkCursor: {
+        cursor: "pointer",
+    }
 }));
 
 const logo = require('../../images/hovno.png');
@@ -52,6 +56,10 @@ export default () => {
             return;
         }
         setState({ ...state, menuDrawer: open });
+    };
+
+    const redirectToHome = () => {
+        history.push('/')
     };
 
     return (
@@ -71,8 +79,12 @@ export default () => {
                             </IconButton>
                         </Hidden>
 
-                        <img src={logo} alt="Hovnokod.cz Logo" />
-                        <Typography variant="h6" className={classes.title}>
+                        <img src={logo} alt="Hovnokod.cz Logo" className={classes.linkCursor} onClick={redirectToHome} />
+                        <Typography
+                            variant="h6"
+                            className={classNames(classes.title, classes.linkCursor)}
+                            onClick={redirectToHome}
+                        >
                             Hovnokod.cz
                         </Typography>
 
@@ -81,15 +93,8 @@ export default () => {
                                 color="inherit"
                                 className={classes.button}
                             >
-                                <CommentIcon className={classes.leftIcon} />
-                                Vložit příspěvek
-                            </Button>
-                            <Button
-                                color="inherit"
-                                className={classes.button}
-                            >
-                                <AccountIcon className={classes.leftIcon} />
-                                Přihlásit se
+                                <CodeIcon className={classes.leftIcon} />
+                                Vložit zdroják
                             </Button>
                         </Hidden>
                     </Toolbar>
@@ -111,12 +116,8 @@ export default () => {
                     <Divider />
                     <List>
                         <ListItem>
-                            <ListItemIcon><AccountIcon /></ListItemIcon>
-                            <ListItemText primary="Přihlásit se" />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon><CommentIcon /></ListItemIcon>
-                            <ListItemText primary="Vložit příspěvek" />
+                            <ListItemIcon><CodeIcon /></ListItemIcon>
+                            <ListItemText primary="Vložit zdroják" />
                         </ListItem>
                     </List>
                 </div>

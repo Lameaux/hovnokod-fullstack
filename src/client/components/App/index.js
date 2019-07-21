@@ -14,7 +14,12 @@ import ConditionsPage from "../ConditionsPage";
 import Error404Page from "../Error404Page";
 import ScrollToTop from "../ScrollToTop"
 
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
 import CATEGORIES, { ALL_CATEGORIES } from '../../constants/categories';
+
+const theme = createMuiTheme();
 
 export default () => {
     const [category, setCategory] = useState('');
@@ -23,33 +28,39 @@ export default () => {
         return <CodeListPage setCategory={setCategory} {...props} />
     };
 
+    const codePage = props => {
+        return <CodePage setCategory={setCategory} {...props} />
+    };
+
     return (
-        <Router history={history}>
-            <ScrollToTop>
-                <CssBaseline />
-                <PageHeader />
-                <CategoryBar category={category} />
-                <div style={{margin: "20px 5px"}}>
-                    <Switch>
-                        <Route exact path="/" render={categoryListPage} />
-                        <Route exact path="/top(/.*)?" render={categoryListPage} />
-                        <Route exact path="/conditions" component={ConditionsPage} />
-                        <Route exact path="/error404" component={Error404Page} />
+        <ThemeProvider theme={theme}>
+            <Router history={history}>
+                <ScrollToTop>
+                    <CssBaseline />
+                    <PageHeader />
+                    <CategoryBar category={category} />
+                    <div style={{margin: "20px 5px"}}>
+                        <Switch>
+                            <Route exact path="/" render={categoryListPage} />
+                            <Route exact path="/top(/.*)?" render={categoryListPage} />
+                            <Route exact path="/conditions" component={ConditionsPage} />
+                            <Route exact path="/error404" component={Error404Page} />
 
-                        {
-                            // Categories
-                            Object.keys(CATEGORIES).map(
-                                key => (
-                                    <Route key={key} exact path={'/' + key} render={categoryListPage} />
+                            {
+                                // Categories
+                                Object.keys(CATEGORIES).map(
+                                    key => (
+                                        <Route key={key} exact path={'/' + key} render={categoryListPage} />
+                                    )
                                 )
-                            )
-                        }
+                            }
 
-                        <Route exact path="/:id" component={CodePage} />
-                    </Switch>
-                </div>
-                <PageFooter />
-            </ScrollToTop>
-        </Router>
+                            <Route exact path="/:id" render={codePage} />
+                        </Switch>
+                    </div>
+                    <PageFooter />
+                </ScrollToTop>
+            </Router>
+        </ThemeProvider>
     );
 }

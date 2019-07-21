@@ -1,9 +1,10 @@
 import React from 'react';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 export default ({language, value}) => {
     return (
-        <pre>
-            {language}: {value}
-        </pre>
+        <SyntaxHighlighter language={language}>
+            {value.trim()}
+        </SyntaxHighlighter>
     );
 }

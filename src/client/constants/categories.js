@@ -16,6 +16,6 @@ const CATEGORIES = {
     other: 'Jiné',
 };
 
-export const ALL_CATEGORIES = 'Všechno';
+export const ALL_CATEGORIES = 'Nejnovější';
 
 export default CATEGORIES;
